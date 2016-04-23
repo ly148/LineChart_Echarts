@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+<body>
+    <!-- create a dom for the charts -->
+    <div id="main" style="height:400px"></div>
+    <!-- ECharts import -->
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script type="text/javascript">
+        // configure for module loader
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+        
+        // use
+        require(
+            [
+                'echarts',
+                'echarts/chart/line' // require the specific chart type
+            ],
+            function (ec) {
+                // Initialize after dom ready
+                var myChart = ec.init(document.getElementById('main'),'macarons2'/*This is the theme I used*/); 
+                
+                var option = {
+                        title : {
+                            text: 'Product Sales in A Week',
+                            subtext: 'Liyuan Yin',
+                            textStyle:{
+                            fontFamily:'Helvetica Neue',
+                            fontWeight: 'bold',
+                            color: '#61a0a8',
+                            },
+                        },
+        //The box shown when the curser is over the points.
+                        tooltip : {
+                            trigger: 'axis',
+                            textStyle:{
+                              fontSize: 13,
+                              fontFamily:'Helvetica Neue',
+                            },
+                            backgroundColor: 'rgba(0,0,0,0.5)',
+                            axisPointer:{
+                             lineStyle:{
+                               type: 'dashed',
+                               color: '#61a0a8',
+                             },
+                            },
+                        },
+                        
+                        legend: {
+                            textStyle:{
+                              color: 'auto',
+                              fontFamily:'Helvetica Neue',
+                            },
+                            data: ['Product A','Product B']
+                         },
+        //control the interactive ways.
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {show: true, type: ['line']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        calculable : true,
+                        
+                        xAxis : [
+                            {   
+                                type : 'category',
+                                axisTick:{
+                                  length: 15,
+                                  lineStyle:{
+                                    color:'#61a0a8',
+                                    width:2,
+                                  },
+                                },
+                                axisLine:{color: '#61a0a8'},
+                                boundaryGap : true,
+                                //when it's set as TRUE, the label will show in the center between axis ticks.
+                                splitLine:{
+                                  show: false,
+                                },
+                                axisLabel:{
+                                    textStyle:{
+                                        fontFamily: 'Helvetica Neue',
+                                        fontSize: 14,
+                                        color: '#61a0a8',
+                                    },
+                                },
+                                data : ['Mon','Tue','Wed','Thur','Fri','Sat','Sun']
+                                
+                            }
+                        ],
+                        yAxis : [
+                            {   
+                                axisLine:{
+                                show: false,
+                                },
+                                axisTick:{
+                                    show:false,
+                                },
+                                type : 'value',
+                                axisLabel : {
+                                    textStyle:{
+                                        fontFamily: 'Helvetica Neue',
+                                        fontSize: 12,
+                                        color: '#61a0a8',
+                                    },
+                                    formatter: '{value} '   
+                                 },
+                           
+                            }
+                        ],
+            //all about datas
+                        series : [
+                            {//serie 1
+                                name:'Product A',
+                                type:'line',
+                                symbol: 'emptyArrow',
+                                symbolSize: 7,
+                                symbolRotate: -90,
+                                itemStyle:{
+                                    normal:{
+                                        color: 'orange',
+                                        lineStyle: {        // 系列级个性化折线样式
+                                             type: 'dashed'
+                                          
+                                        }
+                                    
+                                     
+                                    },
+                              },
+                              data:[11, 11, 
+                                {//customize one specific data, such as the maximun number.
+                                    value: 15, 
+                                    symbol:'emptyHeart',
+                                    symbolSize: 8,
+                                    symbolRotate: 0,
+                                     itemStyle : { normal: {label : {
+                                            show: true,
+                                        
+                                            textStyle : {
+                                                fontSize : '12',
+                                                fontFamily : 'Helvetica Neue',
+                                                fontWeight : 'bold'
+                                            },
+                                         position: 'bottom',
+                                        }}}
+                                },
+                              13, 12, 13, 10], 
+                            },
+                            
+                          {//serie 2
+                                name:'Product B',
+                                type:'line',
+                                symbol: 'emptyCircle',
+                                smooth: true,
+                                symbolSize:3,
+                               
+                                data:[3,5,3,5,2,3,6],
+                                itemStyle:{normal:{
+                                  label:{
+                                  show: true,
+                                 },
+                                   color:'#87cefa',
+                                     areaStyle:{
+                                        type:'default',
+                                       color: 'rgba(249,213,165,0.5)',
+                                    },
+                                }}
+                                
+                              
+                            }
+                        ]
+                    };
+    // Load data into the ECharts instance 
+                myChart.setOption(option); 
+            }
+        );
+    </script>
+</body>
